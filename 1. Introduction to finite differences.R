@@ -41,3 +41,39 @@ legend("topright", legend = c("Function",
 # example was specified for illustration purposes. In a more advanced mathematical
 # software, e.g. MatLab, one is allowed to zoom in the chart. Thus, it is much easier
 # to detect the accuracy of the schemes presented in these lines of code.
+
+## Treating f as a vector of data points, but not the output of the function
+x <- seq(from = 0.1, to = 3, by = 0.1)
+f <- sin(x)
+plot(x, f, type = "o")
+
+dx <- x[2] - x[1]
+n <- length(f)
+
+# At this point we can add noise to our vector in order to show that 
+# dirty data magnifies the errors in the differentiation process
+
+f <- sin(x) + 0.01*rnorm(x, 0, 1)
+
+plot(x, f, type = "p")
+curve(sin(x), add = TRUE)
+
+dfdx <- rep(0, n)
+
+# Using forward difference for the 1st value, backward difference for the last value, and central
+# difference for the intermidiate points
+dfdx[1] <- (f[2] - f[1]) / dx
+
+for (i in 2:(n-1)) {
+  dfdx[i] <- (f[i+1] - f[i-1]) / (2*dx)
+}
+
+dfdx[n] <- (f[n] - f[n-1]) / dx
+
+# Plotting
+plot(x, cos(x), type = "l", col = "black", lty = 1, lwd = 2)
+grid(10, 10, col = "grey", lwd = 1)
+
+lines(dfdx ~ x, col = "red", type = "p")
+legend("topright", legend = c("Exact derivative", "Approximation"),
+       lty = c(1, 1), lwd = c(2, 1), col = c("black", "red"))
