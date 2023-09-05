@@ -1,0 +1,23 @@
+Final goal: price european stock options with the Dupire Local Volatility Model.
+
+
+Remaining steps:
+
+Block 1:
+1) Extend existing EuropeanOption class functionality to incorporate the optionality of finding either the price given IV, or IV given the price.
+(the latter to be deployed as a next step)
+
+2) Write an IV class which will take an instance of the EuropeanOption class with price as an attribute and apply the inverse BS
+formula to extract the IV. (perhaps implemented as an EuropeanOption class method)
+
+3) Write interpolators (both linear and cubic_spline-based) to cunstruct the IV surface.
+
+4) Code the simplest Dupire Local Volatility model (without any sorts of regularization and tackling any kinds of surface ill-posed problems)
+
+Block 2:
+1) Incorporate the Tikhonov-type regularization for spline interpolation for the purposes of Local IV surface structure consistency.
+(issues posed by the recalibration process)
+
+2) Extend the volatility models framework by adding either:
+    a) Heston Stochastic Volatility Model or
+    b) SABR (Stochastic Alpha Beta Rho) to enrich the library.
